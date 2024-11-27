@@ -1,3 +1,11 @@
+# [1.2.0](https://github.com/MaxiCorrea/java-spring-boot-password-recovery/compare/v1.1.0...v1.2.0) (2024-11-27)
+
+
+### Features
+
+* Added login Feature ([22c7bf4](https://github.com/MaxiCorrea/java-spring-boot-password-recovery/commit/22c7bf4f5be22c8bdd7c1ac8e12a86df9ada61a6))
+* Added new method password matches ([c083e21](https://github.com/MaxiCorrea/java-spring-boot-password-recovery/commit/c083e21464e55d24d214fe8e947c894d868d0ab6))
+
 # [1.1.0](https://github.com/MaxiCorrea/java-spring-boot-password-recovery/compare/v1.0.0...v1.1.0) (2024-11-27)
 
 
