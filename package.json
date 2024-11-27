@@ -1,0 +1,40 @@
+{
+  "name": "java-spring-boot-password-recovery",
+  "version": "1.0.0",
+  "scripts": {
+    "release": "semantic-release",
+    "update-version": "node update-version.js"
+  },
+  "devDependencies": {
+    "semantic-release": "^19.0.0",
+    "@semantic-release/changelog": "^6.0.0",
+    "@semantic-release/git": "^10.0.0",
+    "@semantic-release/github": "^8.0.0",
+    "@semantic-release/exec": "^6.0.0",
+    "xml2js": "^0.4.23"
+  },
+  "release": {
+    "plugins": [
+      "@semantic-release/github",
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      [
+        "@semantic-release/exec",
+        {
+          "prepareCmd": "npm run update-version ${nextRelease.version}"
+        }
+      ],
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "pom.xml",
+            "CHANGELOG.md"
+          ],
+          "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ]
+    ]
+  }
+}
