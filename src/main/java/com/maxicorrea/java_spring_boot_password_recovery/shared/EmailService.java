@@ -13,33 +13,31 @@ import com.sendgrid.helpers.mail.objects.Email;
 @Service
 public class EmailService {
 
-    private final String senderEmail;
-    private final String apiKey;
-
-    public EmailService() {
-        senderEmail = System.getenv("SENDGRID_SENDER_EMAIL");
-        apiKey = System.getenv("SENDGRID_API_KEY");
-    }
-
     public void sendWelcome(
             final String email,
             final String username) throws IOException {
-
-        Email from = new Email(senderEmail);
-        Email to = new Email(email);
-        Content content = new Content("text/plain", "and easy to do anywhere, even with Java");
-        String subject = "Sending with SendGrid is Fun";
-        Mail mail = new Mail(from, subject, to, content);
-
         try {
-            SendGrid sg = new SendGrid(apiKey);
+            SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
             Request request = new Request();
             request.setMethod(Method.POST);
             request.setEndpoint("mail/send");
-            request.setBody(mail.build());
+            request.setBody(buildMail(email, username));
             sg.api(request);
         } catch (IOException ex) {
             throw ex;
         }
     }
+
+    private String buildMail(
+            final String email,
+            final String username) throws IOException {
+        Email from = new Email(System.getenv("SENDGRID_SENDER_EMAIL"));
+        Email to = new Email(email);
+        String value = String.format("Welcome %s !", username);
+        Content content = new Content("text/plain", value);
+        String subject = "User Register";
+        Mail mail = new Mail(from, subject, to, content);
+        return mail.build();
+    }
+
 }

@@ -24,7 +24,7 @@ public class UserService {
             final EmailService emailService) {
         this.userRepository = userRepository;
         this.cryptPasswordEncoder = cryptPasswordEncoder;
-        this.emailService = emailService;        
+        this.emailService = emailService;
     }
 
     @Transactional
@@ -71,6 +71,17 @@ public class UserService {
             final String confirmPassword) {
         if (!password.equals(confirmPassword))
             throw new RuntimeException("Las contraseñas no coinciden");
+    }
+
+    public User validateLogin(
+            final String username,
+            final String password) {
+        Optional<User> user = userRepository.findOneByUsername(username);
+        if (!user.isPresent())
+            throw new RuntimeException("Invalid Credentials");
+        if (!cryptPasswordEncoder.matches(password, user.get().getPasswordHash()))
+            throw new RuntimeException("Invalid Credentials");
+        return user.get();
     }
 
 }
