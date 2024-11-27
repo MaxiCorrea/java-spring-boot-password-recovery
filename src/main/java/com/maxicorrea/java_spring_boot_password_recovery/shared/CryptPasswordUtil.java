@@ -13,4 +13,12 @@ public class CryptPasswordUtil {
         return hashedPassword;
     }
 
+    public boolean matches(
+        final String rawPassword, 
+        final String encodedPassword
+    ) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.matches(rawPassword, encodedPassword);
+    }
+
 }
