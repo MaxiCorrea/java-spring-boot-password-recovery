@@ -27,7 +27,7 @@ public class RecoveryController {
     @PostMapping("/reset-password")
     public ResponseEntity<String> resetPassword(
             @RequestBody final ResetPasswordRequest request) {
-        recoveryService.resetPassword(request.getToken(), request.getNewPassword());
+        recoveryService.resetPassword(request.token(), request.newPassword());
         return ResponseEntity.ok("Contraseña actualizada correctamente");
     }
 
