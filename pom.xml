@@ -9,7 +9,7 @@
   </parent>
   <groupId>com.maxicorrea</groupId>
   <artifactId>java-spring-boot-password-recovery</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
   <name>java-spring-boot-password-recovery</name>
   <description>Java Password Recovery Service</description>
   <url/>
@@ -42,9 +42,9 @@
       <artifactId>spring-boot-starter-mail</artifactId>
     </dependency>
     <dependency>
-        <groupId>com.sendgrid</groupId>
-        <artifactId>sendgrid-java</artifactId>
-        <version>5.0.0-rc.1</version>
+      <groupId>com.sendgrid</groupId>
+      <artifactId>sendgrid-java</artifactId>
+      <version>5.0.0-rc.1</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.security</groupId>
