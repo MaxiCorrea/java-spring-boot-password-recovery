@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/MaxiCorrea/java-spring-boot-password-recovery/compare/v1.2.0...v1.3.0) (2024-11-28)
+
+
+### Features
+
+* Forgot Password ([1690822](https://github.com/MaxiCorrea/java-spring-boot-password-recovery/commit/169082274d6582a66b1d2e1615bcb077363127df))
+
 # [1.2.0](https://github.com/MaxiCorrea/java-spring-boot-password-recovery/compare/v1.1.0...v1.2.0) (2024-11-27)
 
 
