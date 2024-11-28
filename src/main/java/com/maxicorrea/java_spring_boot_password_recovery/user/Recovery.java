@@ -1,8 +1,6 @@
-package com.maxicorrea.java_spring_boot_password_recovery.recovery;
+package com.maxicorrea.java_spring_boot_password_recovery.user;
 
 import java.time.LocalDateTime;
-
-import com.maxicorrea.java_spring_boot_password_recovery.user.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,6 +28,14 @@ public class Recovery {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
     public void setToken(String token) {
         this.token = token;
     }
@@ -52,6 +58,14 @@ public class Recovery {
 
     public LocalDateTime getExpiresAt() {
         return expiresAt;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
     }
 
 }
