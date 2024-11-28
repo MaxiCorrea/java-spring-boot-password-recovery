@@ -21,14 +21,14 @@ public class EmailService {
             Request request = new Request();
             request.setMethod(Method.POST);
             request.setEndpoint("mail/send");
-            request.setBody(buildMail(email, username));
+            request.setBody(buildWelcomeMail(email, username));
             sg.api(request);
         } catch (IOException ex) {
             throw ex;
         }
     }
 
-    private String buildMail(
+    private String buildWelcomeMail(
             final String email,
             final String username) throws IOException {
         Email from = new Email(System.getenv("SENDGRID_SENDER_EMAIL"));
@@ -40,4 +40,30 @@ public class EmailService {
         return mail.build();
     }
 
+    public void sendRecovery(
+            final String email,
+            final String token) throws IOException {
+        try {
+            SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
+            Request request = new Request();
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(buildRecoveryMail(email, token));
+            sg.api(request);
+        } catch (IOException ex) {
+            throw ex;
+        }
+    }
+
+    private String buildRecoveryMail(
+            final String email,
+            final String token) throws IOException {
+        Email from = new Email(System.getenv("SENDGRID_SENDER_EMAIL"));
+        Email to = new Email(email);
+        String value = String.format("Recovery Password using token -> %s !", token);
+        Content content = new Content("text/plain", value);
+        String subject = "Password Recovery";
+        Mail mail = new Mail(from, subject, to, content);
+        return mail.build();
+    }
 }
