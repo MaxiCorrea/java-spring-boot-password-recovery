@@ -9,17 +9,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.maxicorrea.java_spring_boot_password_recovery.user.UserService;
-
 @RestController
 @RequestMapping("/register")
-public class UserRegisterController {
+public class UserRegistrationController {
 
-    private final UserService userService;
+    private final UserRegistrationService userRegistrationService;
 
-    public UserRegisterController(
-            final UserService userService) {
-        this.userService = userService;
+    public UserRegistrationController(
+            final UserRegistrationService userRegistrationService) {
+        this.userRegistrationService = userRegistrationService;
     }
 
     @PostMapping("/")
@@ -28,8 +26,7 @@ public class UserRegisterController {
         String username = request.username();
         String email = request.email();
         String password = request.password();
-        String confirmPassword = request.confirmPassword();
-        userService.register(username, email, password, confirmPassword);
+        userRegistrationService.register(username, email, password);
         return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
     }
 }

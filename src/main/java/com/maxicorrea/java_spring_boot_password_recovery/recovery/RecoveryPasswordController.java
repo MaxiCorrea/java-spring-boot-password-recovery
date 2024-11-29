@@ -12,11 +12,11 @@ import com.maxicorrea.java_spring_boot_password_recovery.user.RecoveryService;
 
 @RestController
 @RequestMapping("/recovery")
-public class RecoveryController {
+public class RecoveryPasswordController {
 
     private final RecoveryService recoveryService;
 
-    public RecoveryController(
+    public RecoveryPasswordController(
             final RecoveryService recoveryService) {
         this.recoveryService = recoveryService;
     }
@@ -30,9 +30,9 @@ public class RecoveryController {
 
     @PostMapping("/reset-password")
     public ResponseEntity<String> resetPassword(
-            @RequestBody final ResetPasswordRequest request) {
-        // userService.resetPassword(request.token(), request.newPassword());
-        return ResponseEntity.ok("Contraseña actualizada correctamente");
+            @RequestBody final RecoveryPasswordRequest request) {
+        recoveryService.resetPassword(request.token(), request.newPassword());
+        return ResponseEntity.ok("Password updated successfully");
     }
 
 }

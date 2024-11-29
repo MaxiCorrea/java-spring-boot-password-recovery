@@ -6,10 +6,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.maxicorrea.java_spring_boot_password_recovery.shared.EmailService;
-
-import jakarta.transaction.Transactional;
 
 @Service
 public class RecoveryService {
@@ -24,7 +23,7 @@ public class RecoveryService {
             final EmailService emailService) {
         this.userRepository = userRepository;
         this.recoveryRepository = recoveryRepository;
-        this.emailService = emailService;        
+        this.emailService = emailService;
     }
 
     @Transactional
@@ -34,12 +33,25 @@ public class RecoveryService {
         if (!user.isPresent())
             throw new RuntimeException("Invalid Email");
         Recovery recovery = new Recovery();
-        recovery.setCreatedAt(LocalDateTime.now()); 
         recovery.setExpiresAt(LocalDateTime.now().plusMinutes(2));
-        recovery.setToken(UUID.randomUUID().toString()); 
-        recovery.setUser(user.get());      
+        recovery.setToken(UUID.randomUUID().toString());
+        recovery.setUser(user.get());
         recoveryRepository.save(recovery);
-        emailService.sendRecovery(email, recovery.getToken());        
+        emailService.sendRecovery(email, recovery.getToken());
+    }
+
+    @Transactional
+    public void resetPassword(
+            final String token,
+            final String newPassword) {
+        Optional<Recovery> reco = recoveryRepository.findOneByToken(token);
+        if (!reco.isPresent())
+            throw new RuntimeException("Recovery Not Found");
+        if (reco.get().isExpired())
+            throw new RuntimeException("Recovery Expired");
+        User user = reco.get().getUser();
+        user.setPassword(newPassword);
+        userRepository.save(user);       
     }
 
 }
