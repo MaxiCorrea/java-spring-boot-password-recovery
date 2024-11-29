@@ -2,8 +2,13 @@ package com.maxicorrea.java_spring_boot_password_recovery.user;
 
 import java.time.LocalDateTime;
 
+import com.maxicorrea.java_spring_boot_password_recovery.listeners.CreatedAtTimestampListener;
+import com.maxicorrea.java_spring_boot_password_recovery.listeners.EmailValidationListener;
+import com.maxicorrea.java_spring_boot_password_recovery.listeners.PasswordEncryptionListener;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -11,6 +16,11 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
+@EntityListeners({
+        EmailValidationListener.class,
+        CreatedAtTimestampListener.class,
+        PasswordEncryptionListener.class
+})
 public class User {
 
     @Id
@@ -18,10 +28,17 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
+    @Column(updatable = false)
     private String username;
+
+    @Column(updatable = false)
     private String email;
+
+    @Column(updatable = false)
     private LocalDateTime createdAt;
-    private String passwordHash;
+
+    @Column(name = "password_hash")
+    private String password;
 
     public void setUsername(String username) {
         this.username = username;
@@ -47,12 +64,11 @@ public class User {
         return createdAt;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
-
 }

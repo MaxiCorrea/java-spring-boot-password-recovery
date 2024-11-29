@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 public class CryptPasswordUtil {
 
     public String encode(
-            final String password) {
+            final String rawPassword) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String hashedPassword = encoder.encode(password);
-        return hashedPassword;
+        String encodedPassword = encoder.encode(rawPassword);
+        return encodedPassword;
     }
 
     public boolean matches(

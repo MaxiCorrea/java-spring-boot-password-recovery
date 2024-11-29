@@ -2,8 +2,11 @@ package com.maxicorrea.java_spring_boot_password_recovery.user;
 
 import java.time.LocalDateTime;
 
+import com.maxicorrea.java_spring_boot_password_recovery.listeners.CreatedAtTimestampListener;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,6 +16,9 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "password_recovery_tokens")
+@EntityListeners({
+        CreatedAtTimestampListener.class
+})
 public class Recovery {
 
     @Id
@@ -21,7 +27,10 @@ public class Recovery {
     private Long id;
 
     private String token;
+
+    @Column(updatable = false)
     private LocalDateTime createdAt;
+
     private LocalDateTime expiresAt;
 
     @OneToOne
@@ -66,6 +75,10 @@ public class Recovery {
 
     public User getUser() {
         return user;
+    }
+
+    public boolean isExpired() {
+        return LocalDateTime.now().isAfter(expiresAt);        
     }
 
 }
